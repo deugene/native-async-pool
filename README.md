@@ -22,8 +22,6 @@ npm install --save native-async-pool
 
 ## Usage
 
-Warning!!! The resulting array and the iterable may have different order!!!
-
 ```js
 let asyncPool = require('native-async-pool');
 // or import asyncPool from 'native-async-pool'

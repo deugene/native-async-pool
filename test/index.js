@@ -35,15 +35,15 @@ const iterable = [100, 300, 50, 20];
 
   // Should return the right result
   await assert.deepStrictEqual(
-    [...await asyncPool(1, iterable, asyncCallbackOk)].sort(),
-    [...iterable].sort()
+    await asyncPool(1, iterable, asyncCallbackOk),
+    iterable
   );
   await assert.deepStrictEqual(
-    [...await asyncPool(3, iterable, asyncCallbackOk)].sort(),
-    [...iterable].sort()
+    await asyncPool(3, iterable, asyncCallbackOk),
+    iterable
   );
   await assert.deepStrictEqual(
-    [...await asyncPool(10, iterable, asyncCallbackOk)].sort(),
-    [...iterable].sort()
+    await asyncPool(10, iterable, asyncCallbackOk),
+    iterable
   );
 })();

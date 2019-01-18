@@ -1,6 +1,6 @@
 {
   "name": "native-async-pool",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Async pool implemented with native promises",
   "main": "index.js",
   "directories": {

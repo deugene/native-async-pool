@@ -23,36 +23,32 @@ async function asyncPool(concurrency, iterable, callback) {
   }
 
   let results = [];
+
+  if (concurrency === 1) {
+    // Run promises one by one
+    for (let item of iterable) {
+      results.push(await callback(item, iterable));
+    }
+
+    return results;
+  }
+
+  // Implement a queue if concurrency is > 1
   let queue = new Set();
 
-  for (const item of iterable) {
-    if (concurrency === 1) {
-      // Run promises one by one
-      results.push(await callback(item, iterable));
-    } else {
-      // Implement a queue
-      const exec = Promise.resolve()
-        .then(() => callback(item, iterable))
-        .then(result => {
-          results.push(result);
-          queue.delete(exec);
-        });
+  for (let item of iterable) {
+    let pending = Promise.resolve().then(() => callback(item, iterable));
+    results.push(pending);
+    let exec = pending.then(() => queue.delete(exec));
+    queue.add(exec);
 
-      queue.add(exec);
-
-      if (queue.size >= concurrency) {
-        // Wait until one of the promises in the queue is fulfilled
-        await Promise.race(queue);
-      }
+    if (queue.size >= concurrency) {
+      // Wait until one of the promises in the queue is fulfilled
+      await Promise.race(queue);
     }
   }
 
-  // Run unexecuted promises
-  if (queue.size) {
-    await Promise.all(queue);
-  }
-
-  return results;
+  return Promise.all(results);
 }
 
 /**
