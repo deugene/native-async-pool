@@ -1,0 +1,29 @@
+{
+  "name": "native-async-pool",
+  "version": "1.0.0",
+  "description": "Async pool implemented with native promises",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "NODE_ENV=test node ./test/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/deugene/native-async-pool.git"
+  },
+  "keywords": [
+    "async",
+    "pool",
+    "promise",
+    "native",
+    "concurrency"
+  ],
+  "author": "Yevhen Samoilenko",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/deugene/native-async-pool/issues"
+  },
+  "homepage": "https://github.com/deugene/native-async-pool#readme"
+}
