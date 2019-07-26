@@ -1,6 +1,6 @@
 {
   "name": "native-async-pool",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Async pool implemented with native promises",
   "main": "index.js",
   "directories": {
@@ -25,5 +25,8 @@
   "bugs": {
     "url": "https://github.com/deugene/native-async-pool/issues"
   },
-  "homepage": "https://github.com/deugene/native-async-pool#readme"
+  "homepage": "https://github.com/deugene/native-async-pool#readme",
+  "devDependencies": {
+    "eslint": "^6.1.0"
+  }
 }

@@ -13,13 +13,13 @@ async function asyncPool(concurrency, iterable, callback) {
    * Validate arguments
    */
   if (!Number.isInteger(concurrency)) {
-    throw new Error('First argument should be an integer');
+    throw new TypeError('First argument must be an integer');
   } else if (concurrency < 1) {
-    throw new Error('First argument should be greater than 0');
+    throw new Error('First argument must be greater than 0');
   } else if (!isIterable(iterable)) {
-    throw new Error('Second argument should be an iterable');
+    throw new TypeError('Second argument must be an iterable');
   } else if (typeof callback !== 'function') {
-    throw new Error('Third argument should be a function');
+    throw new TypeError('Third argument must be a function');
   }
 
   let results = [];
@@ -39,7 +39,10 @@ async function asyncPool(concurrency, iterable, callback) {
   for (let item of iterable) {
     let pending = Promise.resolve().then(() => callback(item, iterable));
     results.push(pending);
-    let exec = pending.then(() => queue.delete(exec));
+    let exec = pending.then(result => {
+      pending.__result = result;
+      queue.delete(exec);
+    });
     queue.add(exec);
 
     if (queue.size >= concurrency) {
@@ -48,7 +51,12 @@ async function asyncPool(concurrency, iterable, callback) {
     }
   }
 
-  return Promise.all(results);
+  // run rest of the pending promises
+  if (queue.size) {
+    await Promise.all(queue);
+  }
+
+  return results.map(({__result}) => __result);
 }
 
 /**

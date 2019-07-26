@@ -39,6 +39,12 @@ let asyncCallback = ms => new Promise(resolve => setTimeout(() => resolve(ms), m
 })();
 ```
 
+## Tests
+
+```bash
+npm test
+```
+
 ## License
 
 MIT © [Yevhen Samoilenko](https://github.com/deugene)
